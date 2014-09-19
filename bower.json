@@ -1,0 +1,15 @@
+{
+  "name": "Processing Examples",
+  "version": "0.1.0",
+  "authors": [
+    "PradatiusD <danielprada2012@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
