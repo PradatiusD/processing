@@ -1,31 +1,34 @@
+// Class dependent variables
+HDrawablePool pool;
 
-public HRect rollingRect (int loc) {
+// Color vars
+color teal = #00BEEB;
+color lighterTeal = #9BE6F8;
 
-  HRect rectangle = new HRect(loc);
-
-  rectangle
-    .rounding(10)
-    .fill(#FF6600)
-    .stroke(#000000, 150)
-    .strokeWeight(6)
-    .anchorAt(H.CENTER)
-    .rotation(loc*7.5)
-    .loc(loc*5,height / 2);
-
-  return rectangle;
-}
-
-void setup() {
-  size(1280,1280);
-
-  H.init(this).background(#242424);
+void setup () {
+  size(640, 640);
+  H.init(this).background(teal);
   smooth();
 
-  for(int i=1; i<15; i++){
-    H.add(rollingRect(i*15));
-  }
+  HRect square = new HRect(100);
 
-  H.drawStage();
+  H.add(square)
+    .anchorAt(H.CENTER)
+    .fill(lighterTeal)
+    .loc(320,320)
+    .stroke(lighterTeal, 10)
+  ;
+
+  new HRotate(square, 1);
+
+  HText headerText = new HText("2urning", 100);
+
+  headerText.fill(lighterTeal).anchorAt(H.CENTER).loc(width/2, height*0.25);
+
+  H.add(headerText);
+
 }
 
-void draw() {}
+void draw() {
+  H.drawStage();
+}
