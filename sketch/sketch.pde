@@ -1,34 +1,36 @@
-// Class dependent variables
-HDrawablePool pool;
+HShape s;
+HColorPool colors;
 
-// Color vars
-color teal = #00BEEB;
-color lighterTeal = #9BE6F8;
 
-void setup () {
-  size(640, 640);
-  H.init(this).background(teal);
-  smooth();
+void setup(){
+	size(600, 600);
+	H.init(this).background(#202020);
+	smooth();
 
-  HRect square = new HRect(100);
+	colors = new HColorPool()
+		.add(#FFFFFF)
+		.add(#F7F7F7)
+		.add(#ECECEC)
+		.add(#333333)
+		.add(#0095a8)
+		.add(#00616f)
+		.add(#ff3300)
+		.add(#ff6600)
+	;
 
-  H.add(square)
-    .anchorAt(H.CENTER)
-    .fill(lighterTeal)
-    .loc(320,320)
-    .stroke(lighterTeal, 10)
-  ;
-
-  new HRotate(square, 1);
-
-  HText headerText = new HText("2urning", 100);
-
-  headerText.fill(lighterTeal).anchorAt(H.CENTER).loc(width/2, height*0.25);
-
-  H.add(headerText);
-
-}
-
-void draw() {
-  H.drawStage();
+	for (int i = 0; i < 100; ++i) {
+		s = new HShape("vectors.svg");
+		s
+			.enableStyle(false)
+			.strokeWeight(0)
+			.fill(colors.getColor())
+			.size((int)random(25,125))
+			.rotate((int)random(360))
+			.loc((int)random(width), (int)random(height))
+			.anchorAt(H.CENTER)
+		;
+		H.add(s);
+	}
+	H.drawStage();
+	saveFrame("render.png");
 }
