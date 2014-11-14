@@ -12,21 +12,20 @@ int pngScale = 2;
 
 void setup(){
     size(600, 600);
-    H.init(this).background(#202020);
+    H.init(this).background(#272e36);
     smooth();
 
     colors = new HColorPool()
-        .add(#FFFFFF)
-        .add(#F7F7F7)
-        .add(#ECECEC)
-        .add(#333333)
-        .add(#0095a8)
-        .add(#00616f)
-        .add(#ff3300)
-        .add(#ff6600)
+        .add(#00defe)
+        .add(#f74987)
+        .add(#ddf600)
+        .add(#ff0000)
+        .add(#f72967)
+        .add(#5188bf)
+        .add(#01a3ba)
     ;
 
-    pool = new HDrawablePool(100);
+    pool = new HDrawablePool(50);
     pool
         .autoAddToStage()
         .add(new HShape("vectors.svg"))
