@@ -15,6 +15,7 @@ void setup(){
     H.init(this).background(#272e36);
     smooth();
 
+    // Start doing stuff here
     colors = new HColorPool()
         .add(#00defe)
         .add(#f74987)
@@ -60,6 +61,8 @@ void setup(){
         )
         .requestAll()
     ;
+
+    // Stop doing stuff here
 
     if (vectorOutput == true) {
         saveVector();
