@@ -1,3 +1,4 @@
 bower_components
 sketch/build-tmp
 .DS_Store
+sketch/render-*.png

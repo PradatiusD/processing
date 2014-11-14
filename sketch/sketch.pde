@@ -8,7 +8,7 @@ HColorPool colors;
 // Output configuration
 boolean vectorOutput = false;
 int pngScale = 2;
-
+boolean dev = false;  // If set to true will create file with timestamp
 
 void setup(){
     size(600, 600);
@@ -25,31 +25,41 @@ void setup(){
         .add(#01a3ba)
     ;
 
-    pool = new HDrawablePool(50);
-    pool
-        .autoAddToStage()
-        .add(new HShape("vectors.svg"))
-        .onCreate(
-            new HCallback(){
-                public void run (Object obj) {
-                    HShape d = (HShape) obj;
-                    d
-                        .enableStyle(false)
-                        .strokeWeight(0)
-                        .stroke(#FFFFFF)
-                        .fill((int)random(25,125))
-                        .scale((int)random(0.5, 3))
-                        .rotate((int)random(360))
-                        .loc((int)random(width), (int)random(height))
-                    ;
+    HEllipse hitObj = new HEllipse(200);
 
-                    d.randomColors(colors.fillOnly());
+    H.add(hitObj)
+        .size(400)
+        .noStroke()
+        .fill(#237D26)
+        .anchorAt(H.CENTER)
+        .locAt(H.CENTER)
+        .visibility(false)
+    ;
+
+    HShapeLayout hsl = new HShapeLayout().target(hitObj);
+    
+    pool = new HDrawablePool(300);
+    pool.autoAddToStage()
+        .add (
+            new HRect().rounding(5)
+        )
+        .layout(hsl)
+        .onCreate (
+            new HCallback() {
+                public void run(Object obj) {
+                    HDrawable d = (HDrawable) obj;
+                    d
+                        .noStroke()
+                        .fill(colors.getColor())
+                        .size(8+((int)random(5)*5))
+                        .anchorAt(H.CENTER)
+                        .rotation(45)
+                    ;
                 }
             }
         )
         .requestAll()
     ;
-
 
     if (vectorOutput == true) {
         saveVector();
@@ -75,7 +85,15 @@ void saveHiRes(int scaleFactor) {
         H.stage().paintAll(hiRes, false, 1); // PGraphics, uses3d, Alpha
     }
 
-    hiRes.save("render.png");
+    String fileName;
+
+    if (dev == true) {
+        fileName = "render-"+ new java.util.Date() +".png";
+    } else {
+        fileName = "render.png";
+    }
+
+    hiRes.save(fileName);
 }
 
 // For saving to Vector Graphics
