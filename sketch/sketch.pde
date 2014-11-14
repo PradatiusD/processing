@@ -30,15 +30,6 @@ void setup(){
     pool
         .autoAddToStage()
         .add(new HShape("vectors.svg"))
-
-        .layout(
-            new HGridLayout()
-            .startX(0)
-            .startY(0)
-            .spacing(60,60)
-            .cols(10)
-        )
-
         .onCreate(
             new HCallback(){
                 public void run (Object obj) {
@@ -48,8 +39,9 @@ void setup(){
                         .strokeWeight(0)
                         .stroke(#FFFFFF)
                         .fill((int)random(25,125))
-                        .scale(0.15)
-                        .anchorAt(H.CENTER)
+                        .scale((int)random(0.5, 3))
+                        .rotate((int)random(360))
+                        .loc((int)random(width), (int)random(height))
                     ;
 
                     d.randomColors(colors.fillOnly());
