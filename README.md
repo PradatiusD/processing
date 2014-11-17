@@ -15,3 +15,9 @@ Given that the [HYPE Processing framework](https://github.com/hype/HYPE_Processi
 
 bower install
 ```
+
+
+```Java
+// Helpful functions
+println("");
+```

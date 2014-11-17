@@ -4,18 +4,22 @@ import processing.pdf.*;
 // Hype Dependencies
 HDrawablePool pool;
 HColorPool colors;
+Helper helper;
 
 // Output configuration
-boolean vectorOutput = false;
-int pngScale = 2;
-boolean dev = false;  // If set to true will create file with timestamp
+boolean dev = false;          // If set to true will create file with timestamp
+boolean vectorOutput = false; // If set to true will create pdf, false will create png
+int pngScale = 2;             // Scale of png relative to the size()
+
 
 void setup(){
+
+    helper = new Helper();
+
     size(600, 600);
     H.init(this).background(#272e36);
     smooth();
 
-    // Start doing stuff here
     colors = new HColorPool()
         .add(#00defe)
         .add(#f74987)
@@ -26,89 +30,35 @@ void setup(){
         .add(#01a3ba)
     ;
 
-    HEllipse hitObj = new HEllipse(200);
-
-    H.add(hitObj)
-        .size(400)
-        .noStroke()
-        .fill(#237D26)
-        .anchorAt(H.CENTER)
-        .locAt(H.CENTER)
-        .visibility(false)
-    ;
-
-    HShapeLayout hsl = new HShapeLayout().target(hitObj);
-    
-    pool = new HDrawablePool(300);
-    pool.autoAddToStage()
-        .add (
-            new HRect().rounding(5)
-        )
-        .layout(hsl)
-        .onCreate (
-            new HCallback() {
-                public void run(Object obj) {
-                    HDrawable d = (HDrawable) obj;
+    pool = new HDrawablePool(20);
+    pool
+        .autoAddToStage()
+        .add(new HShape("vectors.svg"))
+        .onCreate(
+            new HCallback(){
+                public void run (Object obj) {
+                    HShape d = (HShape) obj;
                     d
-                        .noStroke()
-                        .fill(colors.getColor())
-                        .size(8+((int)random(5)*5))
-                        .anchorAt(H.CENTER)
-                        .rotation(45)
+                        .enableStyle(false)
+                        .strokeWeight(0)
+                        .stroke(#FFFFFF)
+                        .fill((int)random(25,125))
+                        .scale((int)random(0.5, 3))
+                        .rotate((int)random(360))
+                        .loc((int)random(width), (int)random(height))
                     ;
+
+                    d.randomColors(colors.fillOnly());
                 }
             }
         )
         .requestAll()
     ;
 
-    // Stop doing stuff here
-
-    if (vectorOutput == true) {
-        saveVector();
-    } else {
-        saveHiRes(pngScale);
-    }
+    helper.save();
     noLoop();
 }
 
 void draw(){
     H.drawStage();
-}
-
-// For saving to PNG
-void saveHiRes(int scaleFactor) {
-    PGraphics hiRes = createGraphics(width*scaleFactor, height*scaleFactor, JAVA2D);
-    beginRecord(hiRes);
-    hiRes.scale(scaleFactor);
-
-    if (hiRes == null) {
-        H.drawStage();
-    } else {
-        H.stage().paintAll(hiRes, false, 1); // PGraphics, uses3d, Alpha
-    }
-
-    String fileName;
-
-    if (dev == true) {
-        fileName = "render-"+ new java.util.Date() +".png";
-    } else {
-        fileName = "render.png";
-    }
-
-    hiRes.save(fileName);
-}
-
-// For saving to Vector Graphics
-void saveVector() {
-    PGraphics tmp = null;
-    tmp = beginRecord(PDF, "render.pdf");
-
-    if (tmp == null) {
-        H.drawStage();
-    } else {
-        H.stage().paintAll(tmp, false, 1); // PGraphics, Uses 3d, alpha
-    }
-
-    endRecord();
 }
