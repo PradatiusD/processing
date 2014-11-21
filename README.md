@@ -4,7 +4,6 @@ This is a setup that works off the [Hype Framework](http://www.hypeframework.org
 
 ![Latest Hype test](sketch/render.png)
 
-
 ## Using Bower
 
 Given that the [HYPE Processing framework](https://github.com/hype/HYPE_Processing) is under heavy development, this has been connected via Bower.  Bower will make it easy to easily check for the latest status of the git repository.  To intstall Bower, first install [NodeJS](http://nodejs.org/) and then go to [Bower.io](http://bower.io/).  When you have both install run:
@@ -16,6 +15,17 @@ Given that the [HYPE Processing framework](https://github.com/hype/HYPE_Processi
 bower install
 ```
 
+## Creating video
+
+Use the movie maker tool in the Processing menu under Tools.
+
+
+## Why two directories
+
+This is split into two directories to make it easy to export static or dynamic.
+
+
+## Helpful Java Functions
 
 ```Java
 // Helpful functions
