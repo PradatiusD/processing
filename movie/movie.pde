@@ -1,158 +1,73 @@
-HOscillator rX,rY,rZ;
-
-ArrayList texList;
-PImage[] pickedTex = new PImage[6];
-
-int numCubes = 20;
-PVector[] pickedLoc = new PVector[numCubes];
-
-float minScale = 40;
-float maxScale = 120;
-float[] boxSize = new float[numCubes];
-
-PVector[] pickedRotation = new PVector[numCubes];
+HSwarm swarm;
+HDrawablePool pool;
+HTimer timer;
+HColorPool colors;
+Helper helper;
 
 void setup() {
-	size(640,640,P3D);
-	H.init(this).background(#202020).use3D(true);
+	size(640,640);
+	H.init(this).background(#202020);
 	smooth();
+	helper = new Helper();
 
-	PImage t1 = loadImage("tex1.jpg");
-	PImage t2 = loadImage("tex2.jpg");
-	PImage t3 = loadImage("tex3.jpg");
-	PImage t4 = loadImage("tex4.jpg");
-	PImage t5 = loadImage("tex5.jpg");
 
-	texList = new ArrayList();
-	texList.add(t1);
-	texList.add(t2);
-	texList.add(t3);
-	texList.add(t4);
-	texList.add(t5);
-
-	for (int i = 0; i < pickedTex.length; ++i) {
-		pickedTex[i] = (PImage)texList.get((int)random(texList.size()));
-	}
-	textureMode(NORMAL);
-
-	for (int i = 0; i < numCubes; ++i) {
-		// picked location
-		PVector pt = new PVector();
-		pt.x = (int)random(-300,300);
-		pt.y = (int)random(-300,300);
-		pt.z = (int)random(-300,300);
-		pickedLoc[i] = pt;
-
-		// picked scale
-		boxSize[i] = random(minScale, maxScale);
-
-		// picked rotation 3D / x, y, z
-		PVector pr = new PVector( (int)random(360), (int)random(360), (int)random(360) );
-		pickedRotation[i] = pr;
-	}
-
-	rX = new HOscillator()
-		.range(-360,360)
-		.speed(0.01)
-		.freq(5)
+	swarm = new HSwarm()
+		.addGoal(width/2,height/2)
+		.speed(4)
+		.turnEase(0.025f)
+		.twitch(3)
 	;
 
-	rY = new HOscillator()
-		.range(-360,360)
-		.speed(0.01)
-		.freq(5)
+    colors = new HColorPool()
+        .add(#00defe)
+        .add(#f74987)
+        .add(#ddf600)
+        .add(#ff0000)
+        .add(#f72967)
+        .add(#5188bf)
+        .add(#01a3ba)
+    ;
+
+	pool = new HDrawablePool(60);
+	pool.autoAddToStage()
+		.add (
+			new HRect()
+			.rounding(4)
+			.size(3,6)
+		)
+
+		.colorist(colors.fillOnly())
+
+		.onCreate (
+			new HCallback() {
+				public void run(Object obj) {
+					HDrawable d = (HDrawable) obj;
+					d
+						.noStroke()
+						.loc(random(20, 500), random(20,500))
+						.anchorAt( H.CENTER )
+					;
+
+					swarm.addTarget(d);
+				}
+			}
+		)
 	;
 
-	rZ = new HOscillator()
-		.range(-360,360)
-		.speed(0.01)
-		.freq(5)
+	timer = new HTimer()
+		.numCycles( pool.numActive() )
+		.interval(250)
+		.callback(
+			new HCallback() { 
+				public void run(Object obj) {
+					pool.request();
+				}
+			}
+		)
 	;
 }
 
 void draw() {
 	H.drawStage();
-
-	rX.nextRaw();
-	rY.nextRaw();
-	rZ.nextRaw();
-
-	pushMatrix();
-		translate(width/2, height/2, -100);
-		rotateX( radians(rX.curr()) );
-		rotateY( radians(rY.curr()) );
-		rotateZ( radians(rZ.curr()) );
-
-		for (int i = 0; i < numCubes; ++i) {
-			pushMatrix();
-				translate( pickedLoc[i].x, pickedLoc[i].y, pickedLoc[i].z );
-
-				rotateX( radians(pickedRotation[i].x - frameCount) );
-				rotateY( radians(pickedRotation[i].y + frameCount) );
-				rotateZ( radians(pickedRotation[i].z) );
-
-				buildCube(i);
-			popMatrix();
-		}
-	popMatrix();
-
-	saveFrame("frames/#########.jpg"); if (frameCount == 60) exit();
-}
-
-void buildCube(int i) {
-	strokeWeight(4); stroke(#000000);
-	
-	// +Z "front" face
-	beginShape(QUADS);
-		texture( pickedTex[0] );
-		vertex(-boxSize[i], -boxSize[i],  boxSize[i], 0, 0);
-		vertex( boxSize[i], -boxSize[i],  boxSize[i], 1, 0);
-		vertex( boxSize[i],  boxSize[i],  boxSize[i], 1, 1);
-		vertex(-boxSize[i],  boxSize[i],  boxSize[i], 0, 1);
-	endShape();
-
-	// -Z "back" face
-	beginShape(QUADS);
-		texture( pickedTex[1] );
-		vertex( boxSize[i], -boxSize[i], -boxSize[i], 0, 0);
-		vertex(-boxSize[i], -boxSize[i], -boxSize[i], 1, 0);
-		vertex(-boxSize[i],  boxSize[i], -boxSize[i], 1, 1);
-		vertex( boxSize[i],  boxSize[i], -boxSize[i], 0, 1);
-	endShape();
-
-	// +Y "bottom" face
-	beginShape(QUADS);
-		texture( pickedTex[2] );
-		vertex(-boxSize[i],  boxSize[i],  boxSize[i], 0, 0);
-		vertex( boxSize[i],  boxSize[i],  boxSize[i], 1, 0);
-		vertex( boxSize[i],  boxSize[i], -boxSize[i], 1, 1);
-		vertex(-boxSize[i],  boxSize[i], -boxSize[i], 0, 1);
-	endShape();
-
-	// -Y "top" face
-	beginShape(QUADS);
-		texture( pickedTex[3] );
-		vertex(-boxSize[i], -boxSize[i], -boxSize[i], 0, 0);
-		vertex( boxSize[i], -boxSize[i], -boxSize[i], 1, 0);
-		vertex( boxSize[i], -boxSize[i],  boxSize[i], 1, 1);
-		vertex(-boxSize[i], -boxSize[i],  boxSize[i], 0, 1);
-	endShape();
-
-	// +X "right" face
-	beginShape(QUADS);
-		texture( pickedTex[4] );
-		vertex( boxSize[i], -boxSize[i],  boxSize[i], 0, 0);
-		vertex( boxSize[i], -boxSize[i], -boxSize[i], 1, 0);
-		vertex( boxSize[i],  boxSize[i], -boxSize[i], 1, 1);
-		vertex( boxSize[i],  boxSize[i],  boxSize[i], 0, 1);
-	endShape();
-
-	// -X "left" face
-	beginShape(QUADS);
-		texture( pickedTex[5] );
-		vertex(-boxSize[i], -boxSize[i], -boxSize[i], 0, 0);
-		vertex(-boxSize[i], -boxSize[i],  boxSize[i], 1, 0);
-		vertex(-boxSize[i],  boxSize[i],  boxSize[i], 1, 1);
-		vertex(-boxSize[i],  boxSize[i], -boxSize[i], 0, 1);
-	endShape();
+	helper.save();
 }
