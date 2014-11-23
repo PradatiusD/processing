@@ -1,3 +1,6 @@
+// External Libraries
+import processing.pdf.*;
+
 public class Helper {
 
     void save() {

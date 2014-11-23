@@ -2,60 +2,56 @@ HSwarm swarm;
 HDrawablePool pool;
 HTimer timer;
 HColorPool colors;
+
 Helper helper;
+
+// Output configuration
+boolean saveMovie = false;  // If set to true will save 300 frames in jpg format
 
 void setup() {
 	size(640,640);
-	H.init(this).background(#202020);
+	H.init(this).background(#fbceab);
 	smooth();
 	helper = new Helper();
 
 
 	swarm = new HSwarm()
-		.addGoal(width/2,height/2)
+		.addGoal(H.mouse())
 		.speed(4)
-		.turnEase(0.025f)
-		.twitch(3)
+		.turnEase(random(0.0025, 0.025))
+		.twitch(1)
 	;
 
     colors = new HColorPool()
-        .add(#00defe)
-        .add(#f74987)
-        .add(#ddf600)
-        .add(#ff0000)
-        .add(#f72967)
-        .add(#5188bf)
-        .add(#01a3ba)
+        .add(#ff4062)    // hot pink
+        .add(#fe9c98, 3) // pink
+        .add(#c8c9a8)
+        .add(#81af9a, 5) // green
     ;
 
-	pool = new HDrawablePool(60);
+	pool = new HDrawablePool(250);
 	pool.autoAddToStage()
-		.add (
-			new HRect()
-			.rounding(4)
-			.size(3,6)
-		)
-
+		.add(new HShape("vectors.svg"))
 		.colorist(colors.fillOnly())
 
 		.onCreate (
-			new HCallback() {
-				public void run(Object obj) {
-					HDrawable d = (HDrawable) obj;
-					d
-						.noStroke()
-						.loc(random(20, 500), random(20,500))
-						.anchorAt( H.CENTER )
-					;
-
-					swarm.addTarget(d);
-				}
-			}
+            new HCallback(){
+                public void run (Object obj) {
+                    HShape d = (HShape) obj;
+                    d
+                        .enableStyle(false)
+                        .strokeWeight(0)
+                        .scale(random(2.5,12.5))
+                    ;
+                    d.randomColors(colors.fillOnly());
+                    swarm.addTarget(d);
+                }
+            }
 		)
 	;
 
 	timer = new HTimer()
-		.numCycles( pool.numActive() )
+		.numCycles( pool.numActive())
 		.interval(250)
 		.callback(
 			new HCallback() { 

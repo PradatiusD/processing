@@ -2,7 +2,9 @@
 
 This is a setup that works off the [Hype Framework](http://www.hypeframework.org/), processing and [Joshua Davis'](http://www.skillshare.com/classes/design/Programming-Graphics-I-Introduction-to-Generative-Art/782118657) Skillshare course.  It is meant to quickly set up the environment.
 
-![Latest Hype test](sketch/render.png)
+![Latest Hype still](still/render.png)
+![Latest Hype movie](movie/render.png)
+
 
 ## Using Bower
 

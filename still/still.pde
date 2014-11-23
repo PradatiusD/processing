@@ -1,6 +1,3 @@
-// External Libraries
-import processing.pdf.*;
-
 // Hype Dependencies
 HDrawablePool pool;
 HColorPool colors;
@@ -17,23 +14,27 @@ void setup(){
     helper = new Helper();
 
     size(600, 600);
-    H.init(this).background(#272e36);
+    H.init(this).background(#fbceab);
     smooth();
 
     colors = new HColorPool()
-        .add(#00defe)
-        .add(#f74987)
-        .add(#ddf600)
-        .add(#ff0000)
-        .add(#f72967)
-        .add(#5188bf)
-        .add(#01a3ba)
+        .add(#ff4062)    // hot pink
+        .add(#fe9c98, 3) // pink
+        .add(#c8c9a8)
+        .add(#81af9a, 6) // green
     ;
 
-    pool = new HDrawablePool(20);
+    pool = new HDrawablePool(1000);
     pool
         .autoAddToStage()
         .add(new HShape("vectors.svg"))
+        .layout (
+            new HGridLayout()
+            .startX(21)
+            .startY(21)
+            .spacing(26,26)
+            .cols(24)
+        )
         .onCreate(
             new HCallback(){
                 public void run (Object obj) {
@@ -41,13 +42,8 @@ void setup(){
                     d
                         .enableStyle(false)
                         .strokeWeight(0)
-                        .stroke(#FFFFFF)
-                        .fill((int)random(25,125))
-                        .scale((int)random(0.5, 3))
-                        .rotate((int)random(360))
-                        .loc((int)random(width), (int)random(height))
+                        .scale(2.5)
                     ;
-
                     d.randomColors(colors.fillOnly());
                 }
             }
