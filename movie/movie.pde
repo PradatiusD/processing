@@ -17,13 +17,13 @@ void setup() {
 
 	swarm = new HSwarm()
 		.addGoal(H.mouse())
-		.speed(4)
-		.turnEase(random(0.0025, 0.025))
+		.speed(2)
+		.turnEase(random(0.00125, 0.0125))
 		.twitch(1)
 	;
 
     colors = new HColorPool()
-        .add(#ff4062)    // hot pink
+        .add(#ff4062)    // hot pink∫
         .add(#fe9c98, 3) // pink
         .add(#c8c9a8)
         .add(#81af9a, 5) // green
@@ -32,6 +32,7 @@ void setup() {
 	pool = new HDrawablePool(250);
 	pool.autoAddToStage()
 		.add(new HShape("vectors.svg"))
+		.add(new HShape("more-vectors.svg"))
 		.colorist(colors.fillOnly())
 
 		.onCreate (
@@ -41,7 +42,7 @@ void setup() {
                     d
                         .enableStyle(false)
                         .strokeWeight(0)
-                        .scale(random(2.5,12.5))
+                        .scale(random(2.5,5.5))
                     ;
                     d.randomColors(colors.fillOnly());
                     swarm.addTarget(d);
@@ -52,7 +53,7 @@ void setup() {
 
 	timer = new HTimer()
 		.numCycles( pool.numActive())
-		.interval(250)
+		.interval(500)
 		.callback(
 			new HCallback() { 
 				public void run(Object obj) {

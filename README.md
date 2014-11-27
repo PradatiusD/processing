@@ -29,7 +29,7 @@ This is split into two directories to make it easy to export static or dynamic.
 
 ## Helpful Java Functions
 
-```Java
+```Processing functions
 // Helpful functions
 println("");
 ```

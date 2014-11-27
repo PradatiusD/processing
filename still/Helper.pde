@@ -3,6 +3,11 @@ import processing.pdf.*;
 
 public class Helper {
 
+    Table loadData () {
+        Table table = loadTable("data.csv","header"); // Header option is to read csv data from front
+        return table;
+    }
+
     void save() {
         if (vectorOutput == true) {
             saveVector();
