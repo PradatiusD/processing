@@ -31,7 +31,7 @@ public class Helper {
             H.drawStage();
         } else {
             H.stage().paintAll(graphic, false, 1); // PGraphics, uses3d, Alpha
-        }       
+        }
     }
 
     // For saving to PNG
@@ -58,5 +58,6 @@ public class Helper {
     public Helper Helper () {
         return this;
     }
+
 
 }

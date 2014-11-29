@@ -24,12 +24,67 @@ Use the movie maker tool in the Processing menu under Tools.
 
 ## Why two directories
 
-This is split into two directories to make it easy to export static or dynamic.
+This is split into two di3rectories to make it easy to export static or dynamic.
 
 
-## Helpful Java Functions
+## Helpful Processing functions
 
-```Processing functions
+```Java
+
 // Helpful functions
 println("");
+
+```
+
+## Setup for still
+```Java
+
+// Output configuration
+Helper helper;
+boolean dev = false;          // If set to true will create file with timestamp
+boolean vectorOutput = false; // If set to true will create pdf, false will create png
+int pngScale = 2;             // Scale of png relative to the size()
+
+void setup(){
+
+    helper = new Helper();
+
+    size(600, 600);
+    H.init(this).background(#333333);
+    smooth();
+
+    /* Begin writing visualization code */
+
+    /* End writing visualization code */
+
+    helper.save();
+    noLoop();
+}
+
+void draw(){
+    H.drawStage();
+}
+
+```
+
+
+## Setup for video
+```Java
+Helper helper;
+
+// Output configuration
+boolean saveMovie = false;  // If set to true will save 300 frames in png format
+
+void setup() {
+	helper = new Helper();
+	size(640, 640);
+	H.init(this).background(#000000);
+	smooth();
+}
+
+void draw() {
+
+	H.drawStage();
+	helper.save();
+}
 ```
