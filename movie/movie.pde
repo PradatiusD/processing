@@ -6,6 +6,10 @@ color shapeFill, shapeStroke;
 
 // Output configuration
 boolean saveMovie = true;  // If set to true will save 300 frames in png format
+/* 
+ * Note: Be sure to use the Movie Maker tool
+ * in the Processing App to turn frames into a movie (.mov file). 
+ */
 
 void setup() {
 	helper = new Helper();
@@ -77,7 +81,6 @@ void draw() {
 
 	}
 
-
-	H.drawStage();
 	helper.save();
+	H.drawStage();
 }

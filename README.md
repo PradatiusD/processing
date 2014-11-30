@@ -1,8 +1,11 @@
 # Processing Experiments
 
-This is a setup that works off the [Hype Framework](http://www.hypeframework.org/), processing and [Joshua Davis'](http://www.skillshare.com/classes/design/Programming-Graphics-I-Introduction-to-Generative-Art/782118657) Skillshare course.  It is meant to quickly set up the environment.
+This is a setup that works off the [Hype Framework](http://www.hypeframework.org/), processing and [Joshua Davis'](http://www.skillshare.com/classes/design/Programming-Graphics-I-Introduction-to-Generative-Art/782118657) Skillshare course.  It is meant to quickly set up the environment for easy output.
 
+## Latest example still
 ![Latest Hype still](still/render.png)
+
+## Latest example movie
 ![Latest Hype movie](movie/render.png)
 
 
@@ -17,24 +20,10 @@ Given that the [HYPE Processing framework](https://github.com/hype/HYPE_Processi
 bower install
 ```
 
-## Creating video
-
-Use the movie maker tool in the Processing menu under Tools.
-
-
 ## Why two directories
 
-This is split into two di3rectories to make it easy to export static or dynamic.
+This is split into two directories to make it easy to export either stills or movies.  I'm still working on outputing vectors for movie.
 
-
-## Helpful Processing functions
-
-```Java
-
-// Helpful functions
-println("");
-
-```
 
 ## Setup for still
 ```Java
@@ -73,18 +62,31 @@ void draw(){
 Helper helper;
 
 // Output configuration
-boolean saveMovie = false;  // If set to true will save 300 frames in png format
+boolean saveMovie = true;  // If set to true will save 300 frames in png format
+/* 
+ * Note: Be sure to use the Movie Maker tool
+ * in the Processing App to turn frames into a movie (.mov file). 
+ */
 
 void setup() {
-	helper = new Helper();
-	size(640, 640);
-	H.init(this).background(#000000);
-	smooth();
+    helper = new Helper();
+    size(640, 640);
+    H.init(this).background(#000000);
+    smooth();
 }
 
 void draw() {
-
-	H.drawStage();
-	helper.save();
+    helper.save();
+    H.drawStage();
 }
+```
+
+
+## Helpful Processing functions
+
+```Java
+
+// Helpful functions
+println("");
+
 ```
