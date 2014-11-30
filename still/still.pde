@@ -45,8 +45,6 @@ void setup(){
 
         counter++;
 
-
-        // For actual
         s1
             .enableStyle(false)
             .scale(pop/1500000)
@@ -68,23 +66,6 @@ void setup(){
             .loc((counter*34)-32,(height/2)+120)
 
         ;
-
-        // // For age
-        // s2 = new HShape("vectors.svg");
-
-        // H.add(s2);
-
-        // int colr = 255 - (counter * 10);
-
-        // s2
-        //     .enableStyle(false)
-        //     .scale((counter*1.2)+1)
-        //     .strokeWeight(0)
-        //     .fill(color(colr, colr, colr))
-        //     .loc((counter*32)-32,height/2) // set x and y location
-        //     .anchorAt(H.BOTTOM)
-        // ;
-
     }
 
     /* End writing visualization code */
