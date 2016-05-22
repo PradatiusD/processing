@@ -12,10 +12,7 @@
     "test",
     "tests"
   ],
-  "resolutions": {
-    "hypejs": "staging"
-  },
   "dependencies": {
-    "hypejs": "staging"
+    "hypejs": "lib_staging"
   }
 }

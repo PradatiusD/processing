@@ -1,7 +1,20 @@
 // External Libraries
 import processing.pdf.*;
 
-public class Helper {
+
+
+public class Utils {
+
+    boolean dev          = false;
+    boolean vectorOutput = false;
+    int pngScale         = 2;
+
+
+    int getRandomInt (int min, int max) {
+        Random rand = new Random();
+        int  n = rand.nextInt(max) + min;
+        return n;
+    }
 
     Table loadData () {
         Table table = loadTable("data.csv","header"); // Header option is to read csv data from front
@@ -55,7 +68,7 @@ public class Helper {
         endRecord();
     }
 
-    public Helper Helper () {
+    public Utils Utils () {
         return this;
     }
 

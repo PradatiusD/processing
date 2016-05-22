@@ -1,4 +1,4 @@
-# Processing Experiments
+# Processing Demos
 
 This is a setup that works off the [Hype Framework](http://www.hypeframework.org/), processing and [Joshua Davis'](http://www.skillshare.com/classes/design/Programming-Graphics-I-Introduction-to-Generative-Art/782118657) Skillshare course.  It is meant to quickly set up the environment for easy output.
 
@@ -20,13 +20,11 @@ Given that the [HYPE Processing framework](https://github.com/hype/HYPE_Processi
 bower install
 ```
 
-## Why two directories
 
-This is split into two directories to make it easy to export either stills or movies.  I'm still working on outputing vectors for movie.
 
 
 ## Setup for still
-```Java
+```java
 
 // Output configuration
 Helper helper;
@@ -58,7 +56,7 @@ void draw(){
 
 
 ## Setup for video
-```Java
+```java
 Helper helper;
 
 // Output configuration
@@ -84,7 +82,7 @@ void draw() {
 
 ## Helpful Processing functions
 
-```Java
+```java
 
 // Helpful functions
 println("");
