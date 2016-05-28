@@ -1,86 +1,41 @@
-Helper helper;
-float otherCounter = 640;
-float counter = 0;
-HColorPool colors;
-color shapeFill, shapeStroke;
-
-// Output configuration
-boolean saveMovie = true;  // If set to true will save 300 frames in png format
-/* 
- * Note: Be sure to use the Movie Maker tool
- * in the Processing App to turn frames into a movie (.mov file). 
- */
+Utils movieUtils  = new Utils();
+HColorPool colors = new HColorPool(#F01F1F, #F07E1F, #005D5D, #EDFEF6, #19C019, #9A0000, #007B00, #FFB475);
 
 void setup() {
-	helper = new Helper();
-	size(640, 640);
-	H.init(this).background(#000000);
+
+	size(1024, 1024);
+	H.init(this).background(#303030);
 	smooth();
+	
+	int starScale  = 1000;
+	int starOffset = 60;
+	int ranEdges   = round(random(8, 16));
+	float ranDepth = random(0.2, 0.6);
 
-	float opacity = 0.1;
+	for (int i = 0; i < 15; i++) {
 
-	int a = parseInt(0.8*255);
+		HPath path = (HPath) H.add( new HPath().star(ranEdges, ranDepth) )
+			.size(starScale)
+			.noStroke()
+			.fill( colors.getColor() )
+			.anchorAt(H.CENTER)
+			.loc(1024/2, 1024/2)
+		;
 
-	colors = new HColorPool(
-		 color(102,187,62,  a)
-		,color(199,217,140, a)
-		,color(193,115,68,  a)
-		,color(51,38,115,   a)
-		,color(124,106,205, a)
-		,color(186,207,232, a)
-		,color(133,182,214, a)
-		,color(19,57,54,    a)
-	);
+		new HOscillator()
+			.target(path)
+			.property(H.ROTATION)
+			.range(-30, 30)
+			.speed(0.4)
+			.freq(8)
+			.currentStep(i)
+		;
+
+		starScale -= starOffset;
+	}
 }
 
 void draw() {
-
-	shapeFill = colors.getColor();
-	shapeStroke = colors.getColor();
-
-	boolean x = true;
-
-
-	if (counter < 100) {
-
-		counter++;
-
-		HPath s = new HPath().star(5, 5);
-
-		s
-			.anchorAt(H.CENTER)
-			.fill(shapeFill)
-			.stroke(shapeStroke)
-			.rotate(counter*3)
-			.strokeWeight(3)
-			.scale(counter/8)
-			.loc(height/2,width/2)
-		;
-
-		x = false;
-
-		H.add(s);
-
-
-	} else {
-
-		otherCounter = otherCounter / 1.1;
-
-		HRect s = new HRect((otherCounter) % 600).rounding(300);
-
-		s
-			.anchorAt(H.CENTER)
-			.fill(shapeFill)
-			.stroke(shapeStroke)
-			.strokeWeight(3)
-			.rotate(otherCounter*2)
-			.loc(height/2,width/2)
-		;
-
-		H.add(s);
-
-	}
-
-	helper.save();
+	movieUtils.save();
 	H.drawStage();
 }

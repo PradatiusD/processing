@@ -1,7 +1,9 @@
-public class Helper {
+public class Utils {
 
     int fileCounter = 0;
     int scaleFactor = 2;
+
+    boolean saveMovie = true;
 
     void save () {
         if (saveMovie == true) {
@@ -55,7 +57,7 @@ public class Helper {
     }
 
 
-    public Helper Helper () {
+    public Utils Utils () {
         return this;
     }
 }
