@@ -12,13 +12,12 @@ void setup() {
 	int ranEdges   = round(random(8, 16));
 	float ranDepth = random(0.2, 0.6);
 
-	for (int i = 0; i < 15; i++) {
+	for (int i = 1; i <= 6; i++) {
 
-    HShape shape = new HShape("vectors.svg");
+    HShape shape = new HShape("nestedstars-0"+i+".svg");
 
     shape
       .enableStyle(false)
-      .size(starScale)
       .noStroke()
       .fill(colors.getColor())
       .anchorAt(H.CENTER)
@@ -35,8 +34,6 @@ void setup() {
 			.freq(8)
 			.currentStep(i)
 		;
-
-		starScale -= starOffset;
 	}
 }
 
