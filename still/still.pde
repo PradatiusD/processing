@@ -3,25 +3,24 @@
 Utils util = new Utils();
 
 HDrawablePool pool = new HDrawablePool(576);
-HColorPool colors  = new HColorPool()
-    .add(#28ABE3, 9)
-    .add(#1FDA9A, 9)
-    .add(#E8B71A, 9)
-    .add(#DB3340, 3)
+HColorPool  colors = new HColorPool()
+    .add(#499E16, 9)
+    .add(#2EC3FF, 9)
+    .add(#FFBC3D, 9)
+    .add(#CC3C34, 9)
+    .add(#771FB2, 9)
 ;
 
 int canvasSize    = 1024;
-int columns       = 10;
+int columns       = 5;
 float columnWidth = canvasSize/columns;
 
 
 void setup(){
 
     size(1024, 1024);
-    H.init(this).background(#F7EAC8);
+    H.init(this).background(#262626);
     smooth();
-
-    /* Begin writing visualization code */
 
     pool.autoAddToStage()
         .add (
@@ -32,7 +31,7 @@ void setup(){
 
         .layout (
             new HGridLayout()
-            .startX(25)
+            .startX(-10)
             .spacing(columnWidth, columnWidth)
             .cols(columns)
         )
@@ -41,11 +40,11 @@ void setup(){
              new HCallback() {
                 public void run(Object obj) {
 
-                    HDrawable d = (HDrawable) obj;
+                    HShape d = (HShape) obj;
 
                     d
                         .fill(colors.getColor())
-                        .scale(0.3f)
+                        .scale(0.6f)
                     ;
                 }
             }
